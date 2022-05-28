@@ -20,3 +20,22 @@ def upload_to_aws(local_file, s3_file):
     except NoCredentialsError:
         print("Credentials not available")
         return None
+
+#upload csv
+def upload_csv(bucket):
+    bucket_name = bucket
+    s3_object = "test/reports.csv"
+    os.chdir('/tmp')
+    local_file_path = '/tmp/report.csv'
+     s3.upload_file(
+        local_file_path,
+        bucket_name,
+        s3_object,
+        ExtraArgs={'ContentType': 'text/csv'}
+    )
+
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps({'Please click on the link to download': 's3 link'})
+    }
